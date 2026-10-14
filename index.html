@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Тал нутаг: Responsive хуудас</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Philosopher:wght@400;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+ <header class="site-header">
+  <a class="logo" href="#">Тал нутаг</a>
+
+  <!-- Гар утсанд харагдах цэсний товч -->
+  <button class="menu-toggle" id="menuToggle" type="button" aria-controls="menu" aria-expanded="false">
+   <span class="menu-icon" aria-hidden="true"></span>
+   <span class="visually-hidden">Цэс нээх</span>
+  </button>
+
+  <nav class="navbar" id="menu" aria-label="Үндсэн цэс">
+   <ul class="nav-list">
+    <li><a class="nav-link" href="#">Нүүр</a></li>
+    <li><a class="nav-link" href="#chiglel">Чиглэлүүд</a></li>
+    <li><a class="nav-link" href="#yagaad">Давуу тал</a></li>
+    <li><a class="nav-link" href="#holboo">Холбоо барих</a></li>
+   </ul>
+   <a class="nav-btn" href="#chiglel">Аялал сонгох</a>
+  </nav>
+ </header>
+
+ <main>
+  <!-- Танилцуулга -->
+  <section class="hero">
+   <div class="hero-text">
+    <h1>Хязгааргүй тал, хөх тэнгэрийн доор</h1>
+    <p>Говиос Хөвсгөл хүртэл Монголын хамгийн сайхан чиглэлүүдийг нэг дор танилцуулна.</p>
+    <a class="btn" href="#chiglel">Чиглэлүүдийг үзэх</a>
+   </div>
+  </section>
+
+  <!-- Чиглэлүүд -->
+  <section class="section" id="chiglel">
+   <h2 class="section-title">Аяллын чиглэлүүд</h2>
+   <div class="card-grid">
+    <article class="card">
+     <div class="card-art art-lake" aria-hidden="true"></div>
+     <div class="card-body">
+      <h3>Хөвсгөл нуур</h3>
+      <p>Цэнхэр усны эрэг дагуу морин аялал, завь, цаатны айл.</p>
+      <p class="meta">5 хоног</p>
+     </div>
+    </article>
+    <article class="card">
+     <div class="card-art art-gobi" aria-hidden="true"></div>
+     <div class="card-body">
+      <h3>Говийн манхан</h3>
+      <p>Хонгорын элс дээр тэмээгээр аялж, шөнийн одтой тэнгэр харна.</p>
+      <p class="meta">4 хоног</p>
+     </div>
+    </article>
+    <article class="card">
+     <div class="card-art art-khangai" aria-hidden="true"></div>
+     <div class="card-body">
+      <h3>Хангайн нуруу</h3>
+      <p>Рашаан, хүрхрээ бүхий ногоон хөндийд нүүдэлчин айлд буудаллана.</p>
+      <p class="meta">6 хоног</p>
+     </div>
+    </article>
+    <article class="card">
+     <div class="card-art art-altai" aria-hidden="true"></div>
+     <div class="card-body">
+      <h3>Алтайн мөсөн гол</h3>
+      <p>Цаст оргил, мөсөн голоор алхаж, бүргэдчдийн уламжлалыг үзнэ.</p>
+      <p class="meta">7 хоног</p>
+     </div>
+    </article>
+    <article class="card">
+     <div class="card-art art-khentii" aria-hidden="true"></div>
+     <div class="card-body">
+      <h3>Хэнтийн ойт хээр</h3>
+      <p>Тайгын гол горхи дагаж, түүхт нутгаар аялна.</p>
+      <p class="meta">5 хоног</p>
+     </div>
+    </article>
+    <article class="card">
+     <div class="card-art art-terkh" aria-hidden="true"></div>
+     <div class="card-body">
+      <h3>Тэрхийн цагаан нуур</h3>
+      <p>Галт уулын хөндийд тогтсон нуур, шувууны олон зүйл.</p>
+      <p class="meta">3 хоног</p>
+     </div>
+    </article>
+   </div>
+  </section>
+
+  <!-- Давуу тал -->
+  <section class="section features" id="yagaad">
+   <h2 class="section-title">Яагаад бидэнтэй аялах вэ?</h2>
+   <ul class="feature-list">
+    <li class="feature">
+     <h3>Туршлагатай хөтөч</h3>
+     <p>Нутгийн уугуул хөтөч таныг аюулгүй, сонирхолтой замаар дагуулна.</p>
+    </li>
+    <li class="feature">
+     <h3>Жижиг бүлэг</h3>
+     <p>Нэг бүлэгт хамгийн ихдээ 8 хүн, тиймээс хүн бүрт анхаарал хүрнэ.</p>
+    </li>
+    <li class="feature">
+     <h3>Уян хатан хөтөлбөр</h3>
+     <p>Цаг агаар, сонирхолд тохируулан маршрутаа өөрчилж болно.</p>
+    </li>
+   </ul>
+  </section>
+
+  <!-- Холбоо барих -->
+  <section class="cta" id="holboo">
+   <h2>Аялалаа өнөөдөр төлөвлөе</h2>
+   <p>info@talnutag.mn &nbsp;|&nbsp; +976 8811 2233</p>
+   <a class="btn btn-light" href="mailto:info@talnutag.mn">Имэйл бичих</a>
+  </section>
+ </main>
+
+ <footer class="site-footer">
+  <p>&copy; 2026 Веб зохиомж хичээл. Бүх эрх хуулиар хамгаалагдсан.</p>
+ </footer>
+
+ <script>
+  // Гар утасны цэсийг нээх/хаах
+  const toggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('menu');
+
+  toggle.addEventListener('click', function () {
+   const open = menu.classList.toggle('open');
+   toggle.setAttribute('aria-expanded', open);
+  });
+
+  menu.addEventListener('click', function (e) {
+   if (e.target.tagName === 'A') {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+   }
+  });
+ </script>
+</body>
+</html>

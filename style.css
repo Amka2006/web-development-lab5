@@ -1,0 +1,298 @@
+/* ===== Хувьсагч ===== */
+:root {
+  --night: #0e2a47;
+  --sky: #1d4e89;
+  --steppe: #4f7f52;
+  --gold: #e6a923;
+  --snow: #f4f7fa;
+  --white: #ffffff;
+  --line: #dbe3ec;
+  --text: #1d2a3a;
+  --muted: #5d6c7d;
+  --font-head: "Philosopher", Georgia, serif;
+  --font-body: "Nunito Sans", Arial, sans-serif;
+}
+
+/* ===== MOBILE-FIRST: үндсэн стиль нь гар утсанд зориулсан ===== */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--snow);
+  overflow-x: hidden;               /* хэвтээ скролл гарахаас сэргийлнэ */
+}
+
+img, svg { max-width: 100%; height: auto; }
+h1, h2, h3, p { overflow-wrap: break-word; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ----- Header + цэс (гар утас: нугалдаг) ----- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--night);
+  border-bottom: 3px solid var(--gold);
+}
+
+.logo {
+  font-family: var(--font-head);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* гурван зураас (hamburger) */
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: transform 0.25s, background 0.25s;
+}
+
+.menu-icon { position: relative; }
+.menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; }
+.menu-icon::before { top: -7px; }
+.menu-icon::after { top: 7px; }
+
+.menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
+.menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+.navbar {
+  display: none;                    /* гар утсанд хаалттай */
+  flex-basis: 100%;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0 8px;
+}
+
+.navbar.open { display: flex; }
+
+.nav-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+
+.nav-link {
+  display: block;
+  padding: 12px 8px;
+  color: #c3d3e6;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link:hover { color: var(--white); background: rgba(255, 255, 255, 0.08); }
+
+.nav-btn {
+  padding: 11px 20px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--night);
+  background: var(--gold);
+  border-radius: 24px;
+  text-decoration: none;
+}
+
+/* ----- Hero (нар, уул, тал: зөвхөн CSS) ----- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  padding: 40px 20px;
+  background:
+    radial-gradient(circle at 80% 78%, #ffd98a 0 40px, rgba(255, 217, 138, 0.25) 41px 70px, transparent 71px),
+    linear-gradient(180deg, var(--night) 0%, var(--sky) 55%, #f0b45a 100%);
+}
+
+.hero::before,
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; }
+
+.hero::before {
+  height: 38%;
+  background: #2d6296;
+  clip-path: polygon(0 100%, 0 58%, 12% 32%, 22% 52%, 35% 14%, 50% 56%, 62% 36%, 78% 62%, 90% 26%, 100% 50%, 100% 100%);
+}
+
+.hero::after {
+  height: 20%;
+  background: var(--steppe);
+  clip-path: polygon(0 100%, 0 62%, 18% 36%, 40% 66%, 60% 30%, 82% 64%, 100% 40%, 100% 100%);
+}
+
+.hero-text { position: relative; z-index: 1; max-width: 560px; }
+
+.hero h1 {
+  margin: 0 0 12px;
+  font-family: var(--font-head);
+  font-size: 30px;
+  line-height: 1.2;
+  color: var(--white);
+}
+
+.hero p { margin: 0 0 20px; color: #dce8f5; }
+
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  font-weight: 700;
+  color: var(--night);
+  background: var(--gold);
+  border-radius: 28px;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn-light { background: var(--white); }
+
+/* ----- Хэсгүүд ----- */
+.section { max-width: 1200px; margin: 0 auto; padding: 36px 16px; }
+
+.section-title {
+  margin: 0 0 20px;
+  font-family: var(--font-head);
+  font-size: 26px;
+  color: var(--night);
+}
+
+/* ----- Карт (гар утас: 1 багана) ----- */
+.card-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+
+.card {
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.card-art {
+  position: relative;
+  height: 130px;
+  background: linear-gradient(180deg, var(--sky-a), var(--sky-b));
+}
+
+.card-art::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 55%;
+  background: var(--ridge);
+  clip-path: polygon(0 100%, 0 60%, 16% 30%, 30% 58%, 48% 12%, 66% 56%, 82% 34%, 100% 62%, 100% 100%);
+}
+
+.art-lake    { --sky-a: #7ec3e8; --sky-b: #d9f0fb; --ridge: #1f6f9c; }
+.art-gobi    { --sky-a: #f2b45d; --sky-b: #fbe3b0; --ridge: #c7863a; }
+.art-khangai { --sky-a: #8fcf9a; --sky-b: #dff3df; --ridge: #3f7a49; }
+.art-altai   { --sky-a: #93a9d4; --sky-b: #eaf0fb; --ridge: #5a6f9c; }
+.art-khentii { --sky-a: #6aa58a; --sky-b: #cfe8da; --ridge: #2d5f4a; }
+.art-terkh   { --sky-a: #6fb3c9; --sky-b: #d3ecf3; --ridge: #34697e; }
+
+.card-body { padding: 16px 18px 18px; }
+.card h3 { margin: 0 0 6px; font-family: var(--font-head); font-size: 20px; color: var(--night); }
+.card p { margin: 0 0 8px; font-size: 15px; color: var(--muted); }
+.card .meta { margin: 0; font-weight: 700; color: var(--steppe); }
+
+/* ----- Давуу тал (гар утас: 1 багана) ----- */
+.features { background: var(--white); max-width: none; border-block: 1px solid var(--line); }
+.features > * { max-width: 1168px; margin-inline: auto; }
+
+.feature-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0; padding: 0; list-style: none; }
+
+.feature { padding: 18px 20px; background: var(--snow); border-left: 4px solid var(--gold); border-radius: 8px; }
+.feature h3 { margin: 0 0 4px; font-family: var(--font-head); font-size: 19px; color: var(--night); }
+.feature p { margin: 0; font-size: 15px; color: var(--muted); }
+
+/* ----- Холбоо барих ----- */
+.cta { padding: 44px 20px; text-align: center; color: var(--white); background: var(--sky); }
+.cta h2 { margin: 0 0 8px; font-family: var(--font-head); font-size: 26px; }
+.cta p { margin: 0 0 18px; }
+
+.site-footer { padding: 20px 16px; text-align: center; font-size: 14px; color: #b8c8da; background: var(--night); }
+.site-footer p { margin: 0; }
+
+/* =========================================================
+   TABLET: 768px-ээс дээш
+   ========================================================= */
+@media (min-width: 768px) {
+  .site-header { padding: 12px 32px; }
+  .menu-toggle { display: none; }          /* товч нуугдаж, цэс шууд харагдана */
+
+  .navbar {
+    display: flex;
+    flex-basis: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 0;
+  }
+
+  .nav-list { flex-direction: row; }
+  .nav-link { padding: 8px 10px; border-bottom: 3px solid transparent; font-size: 15px; }
+  .nav-link:hover { background: none; border-color: var(--gold); }
+  .nav-btn { padding: 9px 18px; }
+
+  .hero { min-height: 440px; padding: 64px 32px; }
+  .hero h1 { font-size: 40px; }
+
+  .section { padding: 48px 32px; }
+  .section-title { font-size: 30px; }
+
+  .card-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .feature-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =========================================================
+   DESKTOP: 1024px-ээс дээш
+   ========================================================= */
+@media (min-width: 1024px) {
+  .site-header { padding: 14px 48px; }
+  .nav-link { padding: 8px 14px; font-size: 16px; }
+  .navbar { gap: 28px; }
+
+  .hero { min-height: 520px; padding: 90px 48px; }
+  .hero h1 { font-size: 52px; }
+  .hero p { font-size: 18px; }
+
+  .section { padding: 64px 48px; }
+  .card-grid { grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .card-art { height: 160px; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(14, 42, 71, 0.14); }
+  .card { transition: transform 0.25s, box-shadow 0.25s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
