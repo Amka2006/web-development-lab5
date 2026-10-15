@@ -4,6 +4,11 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Тал нутаг: Responsive хуудас</title>
+ <!-- Горим, iframe-д харагдаж байгаа эсэхийг хуудас зурагдахаас өмнө тохируулна -->
+ <script>
+  document.documentElement.dataset.theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (window.self !== window.top) document.documentElement.classList.add('embedded');
+ </script>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Philosopher:wght@400;700&display=swap" rel="stylesheet">
@@ -14,11 +19,17 @@
  <header class="site-header">
   <a class="logo" href="#">Тал нутаг</a>
 
-  <!-- Гар утсанд харагдах цэсний товч -->
-  <button class="menu-toggle" id="menuToggle" type="button" aria-controls="menu" aria-expanded="false">
-   <span class="menu-icon" aria-hidden="true"></span>
-   <span class="visually-hidden">Цэс нээх</span>
-  </button>
+  <div class="header-tools">
+   <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+    <span class="theme-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Харанхуй горим</span>
+   </button>
+
+   <button class="icon-btn menu-toggle" id="menuToggle" type="button" aria-controls="menu" aria-expanded="false">
+    <span class="menu-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Цэс нээх</span>
+   </button>
+  </div>
 
   <nav class="navbar" id="menu" aria-label="Үндсэн цэс">
    <ul class="nav-list">
@@ -27,7 +38,6 @@
     <li><a class="nav-link" href="#yagaad">Давуу тал</a></li>
     <li><a class="nav-link" href="#holboo">Холбоо барих</a></li>
    </ul>
-   <a class="nav-btn" href="#chiglel">Аялал сонгох</a>
   </nav>
  </header>
 
@@ -127,22 +137,26 @@
   <p>&copy; 2026 Веб зохиомж хичээл. Бүх эрх хуулиар хамгаалагдсан.</p>
  </footer>
 
- <script>
-  // Гар утасны цэсийг нээх/хаах
-  const toggle = document.getElementById('menuToggle');
-  const menu = document.getElementById('menu');
+ <!-- Төхөөрөмжийн хэмжээ сонгох (ikon tovch) -->
+ <div class="view-switch" role="group" aria-label="Харагдах хэмжээ">
+  <button class="vs-btn" type="button" data-view="desktop" aria-pressed="true" aria-label="Компьютер" title="Компьютер">
+   <span class="vs-icon vs-desktop" aria-hidden="true"></span>
+  </button>
+  <button class="vs-btn" type="button" data-view="tablet" aria-pressed="false" aria-label="Таблет" title="Таблет">
+   <span class="vs-icon vs-tablet" aria-hidden="true"></span>
+  </button>
+  <button class="vs-btn" type="button" data-view="phone" aria-pressed="false" aria-label="Гар утас" title="Гар утас">
+   <span class="vs-icon vs-phone" aria-hidden="true"></span>
+  </button>
+ </div>
 
-  toggle.addEventListener('click', function () {
-   const open = menu.classList.toggle('open');
-   toggle.setAttribute('aria-expanded', open);
-  });
+ <!-- Төхөөрөмжийн дүрстэй бүтэн дэлгэцийн харагдац -->
+ <div class="device-view" id="deviceView" hidden>
+  <div class="dv-device" id="dvDevice">
+   <iframe id="dvFrame" title="Хуудасны хувилбар"></iframe>
+  </div>
+ </div>
 
-  menu.addEventListener('click', function (e) {
-   if (e.target.tagName === 'A') {
-    menu.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-   }
-  });
- </script>
+ <script src="script.js"></script>
 </body>
 </html>

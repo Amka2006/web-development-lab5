@@ -1,45 +1,106 @@
-/* ===== Хувьсагч ===== */
+/* ===== Design token ===== */
 :root {
-  --night: #0e2a47;
-  --sky: #1d4e89;
-  --steppe: #4f7f52;
-  --gold: #e6a923;
-  --snow: #f4f7fa;
-  --white: #ffffff;
-  --line: #dbe3ec;
+  --bg: #f1f5fb;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-solid: #ffffff;
   --text: #1d2a3a;
   --muted: #5d6c7d;
+  --heading: #0e2a47;
+  --line: rgba(14, 42, 71, 0.12);
+  --link: #1d4e89;
+  --accent: #1d4e89;
+  --header: rgba(14, 42, 71, 0.88);
+  --footer: #0e2a47;
+  --night: #0e2a47;
+  --steppe: #4f7f52;
+  --gold: #e6a923;
+  --blob1: rgba(29, 78, 137, 0.20);
+  --blob2: rgba(230, 169, 35, 0.22);
+  --blob3: rgba(79, 127, 82, 0.18);
+  --dot: rgba(14, 42, 71, 0.10);
+  --shadow: 0 10px 28px rgba(14, 42, 71, 0.10);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --font-head: "Philosopher", Georgia, serif;
   --font-body: "Nunito Sans", Arial, sans-serif;
+  color-scheme: light;
 }
 
-/* ===== MOBILE-FIRST: үндсэн стиль нь гар утсанд зориулсан ===== */
+/* ===== Dark mode ===== */
+[data-theme="dark"] {
+  --bg: #07101c;
+  --surface: rgba(20, 35, 58, 0.72);
+  --surface-solid: #14233a;
+  --text: #e6edf5;
+  --muted: #9db0c6;
+  --heading: #f2f6fb;
+  --line: rgba(255, 255, 255, 0.10);
+  --link: #8bbcf0;
+  --accent: #2f6db5;
+  --header: rgba(7, 16, 28, 0.85);
+  --footer: #050b14;
+  --blob1: rgba(47, 109, 181, 0.32);
+  --blob2: rgba(230, 169, 35, 0.12);
+  --blob3: rgba(79, 127, 82, 0.22);
+  --dot: rgba(255, 255, 255, 0.07);
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+/* ===== MOBILE-FIRST суурь ===== */
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; background: var(--bg); transition: background 0.35s; }
 
 body {
   margin: 0;
   font-family: var(--font-body);
   line-height: 1.6;
   color: var(--text);
-  background: var(--snow);
-  overflow-x: hidden;               /* хэвтээ скролл гарахаас сэргийлнэ */
+  overflow-x: hidden;
+  transition: color 0.35s;
+}
+
+body.lock { overflow: hidden; }
+
+/* Арын дэвсгэр: бүдэг өнгөт толбо (blob) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -15%;
+  z-index: -2;
+  background:
+    radial-gradient(520px 420px at 12% 8%, var(--blob1), transparent 65%),
+    radial-gradient(480px 400px at 92% 26%, var(--blob2), transparent 65%),
+    radial-gradient(560px 460px at 55% 96%, var(--blob3), transparent 65%);
+  animation: drift 28s ease-in-out infinite alternate;
+}
+
+/* Цэгэн тор: доош уусаж алга болно */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-size: 26px 26px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 75%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+@keyframes drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(2%, 2%, 0) scale(1.08); }
 }
 
 img, svg { max-width: 100%; height: auto; }
 h1, h2, h3, p { overflow-wrap: break-word; }
-a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+a { color: var(--link); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ----- Header + цэс (гар утас: нугалдаг) ----- */
+/* ----- Header ----- */
 .site-header {
   position: sticky;
   top: 0;
@@ -49,19 +110,17 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
-  background: var(--night);
+  background: var(--header);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-bottom: 3px solid var(--gold);
 }
 
-.logo {
-  font-family: var(--font-head);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--white);
-  text-decoration: none;
-}
+.logo { font-family: var(--font-head); font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; }
 
-.menu-toggle {
+.header-tools { display: flex; align-items: center; gap: 8px; }
+
+.icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -69,41 +128,39 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
   height: 44px;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.icon-btn:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
+
+/* Нар ↔ сар */
+.theme-icon {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(230, 169, 35, 0.35);
+  transition: transform 0.6s var(--ease), background 0.4s, box-shadow 0.4s;
+}
+[data-theme="dark"] .theme-icon {
+  background: transparent;
+  box-shadow: inset -6px -3px 0 0 #cfe0f5;
+  transform: rotate(-25deg);
 }
 
-/* гурван зураас (hamburger) */
-.menu-icon,
-.menu-icon::before,
-.menu-icon::after {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--white);
-  border-radius: 2px;
-  transition: transform 0.25s, background 0.25s;
+.menu-icon, .menu-icon::before, .menu-icon::after {
+  display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px;
+  transition: transform 0.25s, top 0.25s, background 0.25s;
 }
-
 .menu-icon { position: relative; }
 .menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; }
-.menu-icon::before { top: -7px; }
-.menu-icon::after { top: 7px; }
-
+.menu-icon::before { top: -6px; }
+.menu-icon::after { top: 6px; }
 .menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
 .menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
 .menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
 
-.navbar {
-  display: none;                    /* гар утсанд хаалттай */
-  flex-basis: 100%;
-  flex-direction: column;
-  gap: 12px;
-  padding: 12px 0 8px;
-}
-
-.navbar.open { display: flex; }
-
+.navbar { display: none; flex-basis: 100%; padding: 8px 0; }
+.navbar.open { display: block; }
 .nav-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
 
 .nav-link {
@@ -112,21 +169,11 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
   color: #c3d3e6;
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: color 0.2s, padding-left 0.2s;
 }
+.nav-link:hover, .nav-link:focus-visible { color: #fff; padding-left: 16px; }
 
-.nav-link:hover { color: var(--white); background: rgba(255, 255, 255, 0.08); }
-
-.nav-btn {
-  padding: 11px 20px;
-  text-align: center;
-  font-weight: 700;
-  color: var(--night);
-  background: var(--gold);
-  border-radius: 24px;
-  text-decoration: none;
-}
-
-/* ----- Hero (нар, уул, тал: зөвхөн CSS) ----- */
+/* ----- Hero ----- */
 .hero {
   position: relative;
   overflow: hidden;
@@ -134,68 +181,71 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
   padding: 40px 20px;
   background:
     radial-gradient(circle at 80% 78%, #ffd98a 0 40px, rgba(255, 217, 138, 0.25) 41px 70px, transparent 71px),
-    linear-gradient(180deg, var(--night) 0%, var(--sky) 55%, #f0b45a 100%);
+    linear-gradient(180deg, #0e2a47 0%, #1d4e89 55%, #f0b45a 100%);
+}
+[data-theme="dark"] .hero {
+  background:
+    radial-gradient(circle at 80% 78%, #e8e2c8 0 34px, rgba(232, 226, 200, 0.18) 35px 64px, transparent 65px),
+    linear-gradient(180deg, #050b14 0%, #0e2a47 60%, #2a3f5e 100%);
 }
 
-.hero::before,
-.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; }
-
+.hero::before, .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; }
 .hero::before {
   height: 38%;
   background: #2d6296;
   clip-path: polygon(0 100%, 0 58%, 12% 32%, 22% 52%, 35% 14%, 50% 56%, 62% 36%, 78% 62%, 90% 26%, 100% 50%, 100% 100%);
 }
-
 .hero::after {
   height: 20%;
   background: var(--steppe);
   clip-path: polygon(0 100%, 0 62%, 18% 36%, 40% 66%, 60% 30%, 82% 64%, 100% 40%, 100% 100%);
 }
+[data-theme="dark"] .hero::before { background: #1b3f66; }
+[data-theme="dark"] .hero::after { background: #2f5233; }
 
 .hero-text { position: relative; z-index: 1; max-width: 560px; }
-
-.hero h1 {
-  margin: 0 0 12px;
-  font-family: var(--font-head);
-  font-size: 30px;
-  line-height: 1.2;
-  color: var(--white);
-}
-
+.hero h1 { margin: 0 0 12px; font-family: var(--font-head); font-size: 30px; line-height: 1.2; color: #fff; }
 .hero p { margin: 0 0 20px; color: #dce8f5; }
 
 .btn {
   display: inline-block;
   padding: 12px 26px;
+  font: inherit;
   font-weight: 700;
   color: var(--night);
   background: var(--gold);
+  border: 2px solid var(--gold);
   border-radius: 28px;
   text-decoration: none;
-  transition: transform 0.2s;
+  transition: transform 0.2s var(--ease);
 }
-
 .btn:hover { transform: translateY(-2px); }
-.btn-light { background: var(--white); }
+.btn-light { background: #fff; border-color: #fff; }
 
 /* ----- Хэсгүүд ----- */
 .section { max-width: 1200px; margin: 0 auto; padding: 36px 16px; }
 
-.section-title {
-  margin: 0 0 20px;
-  font-family: var(--font-head);
-  font-size: 26px;
-  color: var(--night);
+.section-title { margin: 0 0 20px; font-family: var(--font-head); font-size: 26px; color: var(--heading); }
+.section-title::after {
+  content: "";
+  display: block;
+  width: 120px; height: 14px;
+  margin-top: 8px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14'%3E%3Cpath d='M1 13V1h14v9H6V5h4' fill='none' stroke='%23e6a923' stroke-width='2'/%3E%3C/svg%3E") repeat-x;
 }
 
-/* ----- Карт (гар утас: 1 багана) ----- */
+/* ----- Карт ----- */
 .card-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
 
 .card {
   overflow: hidden;
-  background: var(--white);
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s;
 }
 
 .card-art {
@@ -203,7 +253,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
   height: 130px;
   background: linear-gradient(180deg, var(--sky-a), var(--sky-b));
 }
-
 .card-art::after {
   content: "";
   position: absolute;
@@ -221,48 +270,89 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
 .art-terkh   { --sky-a: #6fb3c9; --sky-b: #d3ecf3; --ridge: #34697e; }
 
 .card-body { padding: 16px 18px 18px; }
-.card h3 { margin: 0 0 6px; font-family: var(--font-head); font-size: 20px; color: var(--night); }
+.card h3 { margin: 0 0 6px; font-family: var(--font-head); font-size: 20px; color: var(--heading); }
 .card p { margin: 0 0 8px; font-size: 15px; color: var(--muted); }
 .card .meta { margin: 0; font-weight: 700; color: var(--steppe); }
+[data-theme="dark"] .card .meta { color: #86c28b; }
 
-/* ----- Давуу тал (гар утас: 1 багана) ----- */
-.features { background: var(--white); max-width: none; border-block: 1px solid var(--line); }
+/* ----- Давуу тал ----- */
+.features {
+  max-width: none;
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-block: 1px solid var(--line);
+}
 .features > * { max-width: 1168px; margin-inline: auto; }
 
 .feature-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0; padding: 0; list-style: none; }
-
-.feature { padding: 18px 20px; background: var(--snow); border-left: 4px solid var(--gold); border-radius: 8px; }
-.feature h3 { margin: 0 0 4px; font-family: var(--font-head); font-size: 19px; color: var(--night); }
+.feature { padding: 18px 20px; background: var(--surface-solid); border-left: 4px solid var(--gold); border-radius: 10px; box-shadow: var(--shadow); }
+.feature h3 { margin: 0 0 4px; font-family: var(--font-head); font-size: 19px; color: var(--heading); }
 .feature p { margin: 0; font-size: 15px; color: var(--muted); }
 
 /* ----- Холбоо барих ----- */
-.cta { padding: 44px 20px; text-align: center; color: var(--white); background: var(--sky); }
+.cta { padding: 48px 20px; text-align: center; color: #fff; background: linear-gradient(120deg, var(--accent), #14406f); }
 .cta h2 { margin: 0 0 8px; font-family: var(--font-head); font-size: 26px; }
 .cta p { margin: 0 0 18px; }
 
-.site-footer { padding: 20px 16px; text-align: center; font-size: 14px; color: #b8c8da; background: var(--night); }
+.site-footer { padding: 20px 16px; text-align: center; font-size: 14px; color: #b8c8da; background: var(--footer); }
 .site-footer p { margin: 0; }
+
+/* ===== Төхөөрөмж сонгох ikon tovch (гар утсанд харагдахгүй) ===== */
+.view-switch { display: none; }
+
+/* ===== Төхөөрөмжийн дүрстэй бүтэн дэлгэцийн харагдац ===== */
+.device-view {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: radial-gradient(circle at 50% 0%, #17304d, #07101c 75%);
+  animation: fade 0.3s var(--ease);
+}
+.device-view[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.dv-device {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 28px);
+  padding: 12px;
+  background: #05090f;
+  border: 2px solid #2b3b52;
+  border-radius: 40px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -50%) scale(var(--s, 1));
+  transition: width 0.4s var(--ease), height 0.4s var(--ease), border-radius 0.4s;
+}
+.dv-device.is-tablet { border-radius: 28px; }
+.dv-device:not(.is-tablet)::before {          /* гар утасны "нүх" */
+  content: "";
+  position: absolute;
+  top: 4px; left: 50%;
+  width: 90px; height: 6px;
+  background: #1c2736;
+  border-radius: 6px;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.dv-device iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: 26px; background: #fff; }
+.dv-device.is-tablet iframe { border-radius: 16px; }
+
+/* iframe дотор ikon tovch харагдахгүй */
+.embedded .view-switch { display: none !important; }
 
 /* =========================================================
    TABLET: 768px-ээс дээш
    ========================================================= */
 @media (min-width: 768px) {
   .site-header { padding: 12px 32px; }
-  .menu-toggle { display: none; }          /* товч нуугдаж, цэс шууд харагдана */
+  .menu-toggle { display: none; }
 
-  .navbar {
-    display: flex;
-    flex-basis: auto;
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-    padding: 0;
-  }
-
-  .nav-list { flex-direction: row; }
-  .nav-link { padding: 8px 10px; border-bottom: 3px solid transparent; font-size: 15px; }
-  .nav-link:hover { background: none; border-color: var(--gold); }
-  .nav-btn { padding: 9px 18px; }
+  .navbar { display: block; flex-basis: auto; padding: 0; order: 2; }
+  .header-tools { order: 3; }
+  .nav-list { flex-direction: row; gap: 4px; }
+  .nav-link { padding: 8px 10px; font-size: 15px; border: 0; border-bottom: 3px solid transparent; }
+  .nav-link:hover, .nav-link:focus-visible { padding-left: 10px; border-color: var(--gold); }
 
   .hero { min-height: 440px; padding: 64px 32px; }
   .hero h1 { font-size: 40px; }
@@ -272,6 +362,44 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
 
   .card-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
   .feature-list { grid-template-columns: repeat(3, 1fr); }
+
+  /* Ikon tovchnuud */
+  .view-switch {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 40;
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--header);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .vs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .vs-btn:hover { background: rgba(255, 255, 255, 0.14); }
+  .vs-btn[aria-pressed="true"] { background: var(--gold); }
+
+  .vs-icon { position: relative; display: block; border: 2px solid #dce8f5; transition: border-color 0.2s; }
+  .vs-btn[aria-pressed="true"] .vs-icon { border-color: var(--night); }
+  .vs-desktop { width: 20px; height: 14px; border-radius: 3px; margin-bottom: 4px; }
+  .vs-desktop::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 8px; height: 2px; background: currentColor; border-radius: 2px; transform: translateX(-50%); box-shadow: 0 0 0 1px #dce8f5; }
+  .vs-tablet { width: 16px; height: 20px; border-radius: 4px; }
+  .vs-phone { width: 11px; height: 19px; border-radius: 4px; }
 }
 
 /* =========================================================
@@ -280,7 +408,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
 @media (min-width: 1024px) {
   .site-header { padding: 14px 48px; }
   .nav-link { padding: 8px 14px; font-size: 16px; }
-  .navbar { gap: 28px; }
+  .nav-link:hover, .nav-link:focus-visible { padding-left: 14px; }
 
   .hero { min-height: 520px; padding: 90px 48px; }
   .hero h1 { font-size: 52px; }
@@ -289,10 +417,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
   .section { padding: 64px 48px; }
   .card-grid { grid-template-columns: repeat(3, 1fr); gap: 26px; }
   .card-art { height: 160px; }
-  .card:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(14, 42, 71, 0.14); }
-  .card { transition: transform 0.25s, box-shadow 0.25s; }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 34px rgba(14, 42, 71, 0.18); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
